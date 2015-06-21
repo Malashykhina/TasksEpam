@@ -27,12 +27,8 @@ public class Word implements Comparable<Word>{
 		size=s.length();
 	}
 	
-	public Character[] getChArr() {
-		return chArr;
-	}
-
-	public void setChArr(Character[] chArr) {
-		this.chArr = chArr;
+	public Character getCharFromArr(int i) {
+		return chArr[i];
 	}
 
 	public int getSize() {
@@ -52,11 +48,11 @@ public class Word implements Comparable<Word>{
 	@Override
 	public int compareTo(Word o) {//for sorting in alphabetical order
 		int i=0;
-		while (((i!=(size-1))&&(i!=(o.getSize()-1)))&&(this.getChArr()[i]).equals(o.getChArr()[i])){
+		while (((i!=(size-1))&&(i!=(o.getSize()-1)))&&(this.getCharFromArr(i)).equals(o.getCharFromArr(i))){
 			i++;
 		}
 		if ((i!=(size-1))&&(i!=(o.getSize()-1))){
-			return (chArr[i]).compareTo(o.getChArr()[i]);
+			return (getCharFromArr(i)).compareTo(o.getCharFromArr(i));
 		}else{
 			if (i==(size-1)){
 				return -1;
