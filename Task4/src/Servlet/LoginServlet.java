@@ -1,7 +1,9 @@
-
+package Servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,6 +12,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import workingWithDB.DB;
+
+import logic.coffee.Coffee;
+
+import dao.CoffeeDao;
 import dao.LoginDao;
 
 
@@ -43,9 +50,35 @@ public class LoginServlet extends HttpServlet {
         //session.setAttribute("userpass", p);//
   
         if(LoginDao.validate(n, p)){   
+        	
+        	if(n.equals("Admin")){//TO DO!!!!!!
+        	
         	//out.print("you are best");    
-            RequestDispatcher rd=request.getRequestDispatcher("welcome.jsp");    
-            rd.forward(request,response);    
+            RequestDispatcher rd=request.getRequestDispatcher("admin.jsp");    
+            rd.forward(request,response);   
+			
+        	}
+        	else{//not admin
+        		
+        		 RequestDispatcher rd=request.getRequestDispatcher("order.jsp");    
+                 rd.forward(request,response);  
+                 /*String c=request.getParameter("cType"); 
+                 ArrayList<String> coffee=new ArrayList<String> ();
+                 coffee.add("arabic");
+                 coffee.add("java");
+				session.setAttribute("coffee", coffee);
+                 //request.setAttribute("coffee", coffee);
+                 out.print("coffe"+coffee);*/
+                /* ArrayList<Coffee> coffee= CoffeeDao.getCoffee(c);
+
+     			
+                 request.setAttribute("coffee", coffee);//.iterator().next()
+                 out.print("coffe"+coffee.get(0).toString());*/
+     			
+        	}
+        	
+			
+			
         }    
         else{    
             out.print("<p style=\"color:red\">Sorry username or password error</p>");    

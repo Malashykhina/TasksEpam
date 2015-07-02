@@ -1,14 +1,18 @@
-
+package dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 
-public class LoginDao{
-public static boolean validate(String name, String pass) {
-	boolean status = false;
+import logic.coffee.Coffee;
+
+public class CoffeeDao{
+public static ArrayList <Coffee> getCoffee(String cType) {
+	ArrayList <Coffee> result=new ArrayList <Coffee>();
 	Connection conn = null;
  PreparedStatement pst = null;
  ResultSet rs = null;
@@ -20,17 +24,16 @@ public static boolean validate(String name, String pass) {
  String password = "qazwsx";
 try {
  Class.forName(driver).newInstance();
- conn = DriverManager
- .getConnection(url + dbName, userName, password);
+ conn = DriverManager.getConnection(url + dbName, userName, password);
 
- pst = conn
- .prepareStatement("select * from user where userName=? and password=?");
- pst.setString(1, name);
- pst.setString(2, pass);
+ pst = conn.prepareStatement("Select * from Coffee");
+ pst.setString(1, cType);
 
- rs = pst.executeQuery();
- status = rs.next();
-// return status;
+ rs= pst.executeQuery("Select * from Coffee");
+ while(rs.next()){
+	 result.add(new Coffee(rs.getInt(1), rs.getString(2), rs.getDouble(3),rs.getInt(4)));
+	 }
+ return result;
  } catch (Exception e) {
  System.out.println(e);
  } finally {
@@ -52,5 +55,6 @@ try {
  e.printStackTrace();}
 	 }
  }
- return status; }
+ return result; }
+
 }
